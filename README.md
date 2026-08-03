@@ -61,7 +61,7 @@ Use Start.bat or Start.vbs (for launching without console window).
 Run "Start.bat"/"Start.vbs" to install requirements.txt and launch the Software.  
 ```
 
-### Manual:
+## Manual:
 
 ### Windows
   ```bash
