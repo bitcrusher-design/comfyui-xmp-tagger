@@ -56,18 +56,17 @@ The app relies on the following key libraries (installed automatically via `requ
 
 ## Quick Start (Windows)
 
-Use Start.bat or Start.vbs (for launching without console window).
-Run "Start.bat"/"Start.vbs" to install requirements.txt and launch the Software.
+Use Start.bat or Start.vbs (for launching without console window).  
+Run "Start.bat"/"Start.vbs" to install requirements.txt and launch the Software.  
 
 ### Manual:
 
-# Windows
+### Windows
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
 
-
-# Linux / macOS
+### Linux / macOS
 python3 -m venv venv
 source venv/bin/activate
 venv\Scripts ctivate # Windows
