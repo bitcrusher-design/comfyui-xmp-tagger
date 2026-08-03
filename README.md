@@ -62,7 +62,7 @@ Windows One-Click Launchers (check/install requirements and start the App):
 
     Double-click "Start.vbs" to launch silently in the background (no command prompt window).
 
-### Manual:
+### Manual (venv is optional):
 
 #### Windows
   ```bash
@@ -79,6 +79,13 @@ source venv/bin/activate
 venv\Scripts ctivate # Windows
 pip install -r requirements.txt
 ```
+
+## Launch the App
+
+```bash
+python main.py 
+```
+
 ---
 
 ## 🏗️ Architecture Flow
