@@ -57,7 +57,9 @@ The app relies on the following key libraries (installed automatically via `requ
 ## Quick Start (Windows)
 
 Use Start.bat or Start.vbs (for launching without console window).  
+```bash
 Run "Start.bat"/"Start.vbs" to install requirements.txt and launch the Software.  
+```
 
 ### Manual:
 
