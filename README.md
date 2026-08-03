@@ -56,7 +56,7 @@ The app relies on the following key libraries (installed automatically via `requ
 
 ### Quick Start (Windows)
 
-Windows One-Click Launchers:
+Windows One-Click Launchers (check/install requirements and start the App):
 
     Double-click "Start.bat" to launch via terminal.
 
