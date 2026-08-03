@@ -34,6 +34,30 @@ This desktop application automatically reads complex ComfyUI workflow graphs, ex
 
 ---
 
+## 🛠️ Prerequisites & Installation
+Requirements
+
+    Python: 3.10 or higher
+
+    OS: Windows (optimized with GDI handle safety), macOS, or Linux
+
+---
+
+## 🛠️ Installation & Quick Start
+
+git clone https://github.com/your-username/comfyui-png-xmp-tagger.git
+
+Use start.bat:
+Run "start.bat" to install requirements.txt and launch the Software.
+
+Manual:
+cd comfyui-png-xmp-tagger
+python -m venv venv
+venv\Scripts ctivate # Windows
+pip install -r requirements.txt
+
+---
+
 ## 🏗️ Architecture Flow
 
 ```mermaid
