@@ -54,7 +54,7 @@ The app relies on the following key libraries (installed automatically via `requ
    cd comfyui-png-xmp-tagger
    
 
-## Quick Start (Windows)
+### Quick Start (Windows)
 
 ### Use Start.bat or Start.vbs (for launching without console window).  
 ```bash
