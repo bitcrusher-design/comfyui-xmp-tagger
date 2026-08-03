@@ -82,13 +82,13 @@ pip install -r requirements.txt
 
 ## Launch Comfyui-XMP-Tagger
 
-# Windows
+#### Windows
 python main.py
 
-# Linux / macOS (ohne gewähltes venv)
+#### Linux / macOS (ohne gewähltes venv)
 python3 main.py
 
-# Run the application (after activating venv)
+#### Run the application (after activating venv)
 python main.py
 
 ---
