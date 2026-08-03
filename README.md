@@ -58,15 +58,9 @@ The app relies on the following key libraries (installed automatically via `requ
 
 Windows One-Click Launchers:
 
-    Double-click Start.bat to launch via terminal.
+    Double-click "Start.bat" to launch via terminal.
 
-    Double-click Start.vbs to launch silently in the background (no command prompt window).
-
-### Use Start.bat or Start.vbs (for launching without console window).  
-```bash
-Run "Start.bat"/"Start.vbs" to check/install requirements.txt and launch the Software.  
-```
-
+    Double-click "Start.vbs" to launch silently in the background (no command prompt window).
 
 ### Manual:
 
