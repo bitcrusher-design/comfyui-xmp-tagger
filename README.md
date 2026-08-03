@@ -80,11 +80,16 @@ venv\Scripts ctivate # Windows
 pip install -r requirements.txt
 ```
 
-## Launch the App
+## Launch Comfyui-XMP-Tagger
 
-```bash
-python main.py 
-```
+# Windows
+python main.py
+
+# Linux / macOS (ohne gewähltes venv)
+python3 main.py
+
+# Run the application (after activating venv)
+python main.py
 
 ---
 
