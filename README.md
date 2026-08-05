@@ -9,8 +9,8 @@ Perfect for organizing, filtering, and indexing thousands of Stable Diffusion im
 ---
 <img width="1196" height="1048" alt="ComfyUI-XMP-Tagger_v100_mainview_01" src="https://github.com/user-attachments/assets/c68b9753-3630-488c-96bc-16f1437430df" />
 
-<a href="[DEIN_BILD_PFAD.png](https://github.com/user-attachments/assets/c68b9753-3630-488c-96bc-16f1437430df)">
-  <img src="[DEIN_BILD_PFAD.png](https://github.com/user-attachments/assets/c68b9753-3630-488c-96bc-16f1437430df)" alt="App Preview" width="400">
+<a href="https://github.com/user-attachments/assets/c68b9753-3630-488c-96bc-16f1437430df">
+  <img src="https://github.com/user-attachments/assets/c68b9753-3630-488c-96bc-16f1437430df" alt="App Preview" width="400">
 </a>
 ---
 
