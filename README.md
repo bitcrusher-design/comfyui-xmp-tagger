@@ -7,10 +7,8 @@ A high-performance desktop utility designed to automatically extract **ComfyUI w
 Perfect for organizing, filtering, and indexing thousands of Stable Diffusion images inside photo management suites like **DigiKam**, **Adobe Lightroom**, or **Bridge**.
 
 ---
-<img width="1196" height="1048" alt="ComfyUI-XMP-Tagger_v100_mainview_01" src="https://github.com/user-attachments/assets/c68b9753-3630-488c-96bc-16f1437430df" />
-
 <a href="https://github.com/user-attachments/assets/c68b9753-3630-488c-96bc-16f1437430df">
-  <img src="https://github.com/user-attachments/assets/c68b9753-3630-488c-96bc-16f1437430df" alt="App Preview" width="400">
+  <img src="https://github.com/user-attachments/assets/c68b9753-3630-488c-96bc-16f1437430df" alt="ComfyUI-XMP-Tagger_v100_mainview_01" width="500">
 </a>
 ---
 
