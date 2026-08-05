@@ -87,6 +87,13 @@ If you prefer to run it via command line:
 
 ---
 
+## ⚠️ Safety Disclaimer
+
+> [!WARNING]
+> Always make a backup of your PNG images before running the tagger in batch or overwrite mode. Although the lossless `embed` mode has been extensively tested, unexpected bugs, system interruptions, or disk errors could potentially corrupt your image files. Use this utility at your own risk.
+
+---
+
 ## 📄 License
 
 This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details.
