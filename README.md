@@ -2,6 +2,8 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![Release](https://img.shields.io/badge/release-v1.0.0-green.svg)](releases/V1.0.0.0)
 
+## ComfyUI XMP Tagger
+
 A high-performance desktop utility designed to automatically extract **ComfyUI workflows, prompts, models, and samplers** from generated PNG files and embed them as standardized hierarchical and flat XMP metadata tags. 
 
 Perfect for organizing, filtering, and indexing thousands of Stable Diffusion images inside photo management suites like **DigiKam**, **Adobe Lightroom**, or **Bridge**.
