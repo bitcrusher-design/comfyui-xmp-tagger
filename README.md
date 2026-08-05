@@ -1,108 +1,87 @@
-# ComfyUI PNG to DigiKam XMP Image Tagger
+# 📷 ComfyUI XMP Tagger
 
+[![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
+[![Release](https://img.shields.io/badge/release-v1.0.0-green.svg)](releases/V1.0.0.0)
 
+A high-performance desktop utility designed to automatically extract **ComfyUI workflows, prompts, models, and samplers** from generated PNG files and embed them as standardized hierarchical and flat XMP metadata tags. 
 
-A high-performance, non-destructive metadata extractor and XMP tagger designed specifically for **ComfyUI-generated PNG images**. 
-
-This desktop application automatically reads complex ComfyUI workflow graphs, extracts prompts, samplers, checkpoints, and LoRAs, and converts them into standardized, hierarchical **XMP/Dublin-Core metadata**. Your generated AI art becomes instantly searchable and neatly organized in professional digital asset managers like **digiKam** and **Adobe Lightroom**.
-
----
-
-## 📸 Overview & Key Features
-
-- **⚡ Lossless Byte-Level Writing (`embed` mode)**
-  Injects XMP metadata directly into PNG chunks in ~30ms per image without decompressing or re-compressing pixels—preserving original ComfyUI workflow data intact.
-- **📁 Dual Tagging Modes**
-  Choose between direct binary embedding into the PNG or generating external `.xmp` sidecar files.
-- **🧠 Intelligent ComfyUI Workflow Parsing**
-  Handles complex graphs, muted/bypassed nodes, custom nodes, and special loaders like `Power Lora Loader (rgthree)`. Automatically pairs samplers with their respective schedulers (e.g., `euler / normal`).
-- **🔤 Flexible Prompt Tokenization & Filtering**
-  Extract tags using comma-delimited or word-level splits. Filter out negative prompts, quality buzzwords, and customizable stopwords (`stopwords.txt`, `adjectives.txt`, `short_words.txt`).
-- **🛡️ High-Performance GUI (GDI Handle Safe)**
-  CustomTkinter interface optimized for huge folders. Uses a virtualized single-textbox renderer to prevent OS handle limits and Windows memory crashes.
-- **🔍 Built-in Workflow Analyzer**
-  Inspect raw image chunks, auto-detect positive prompt nodes, and inject custom Node IDs directly into your config with one click.
-- **🎨 Visual Metadata Diff & Smart Colors**
-  Live preview highlighting:
-  - **Green**: New tags to be written
-  - **Gray**: Existing tags already present
-  - **Red**: Tags queued for deletion (overwrite mode)
-- **📅 EXIF & Creation Date Fallback**
-  Prioritizes standard EXIF metadata, falls back to XMP creation dates, or utilizes file system timestamps to ensure accurate sorting.
-- **🌍 Localization & Custom Themes**
-  Full English & German UI support, preset management, and real-time customizable color themes.
+Perfect for organizing, filtering, and indexing thousands of Stable Diffusion images inside photo management suites like **DigiKam**, **Adobe Lightroom**, or **Bridge**.
 
 ---
 
-## 🛠️ Prerequisites & Installation
+## 💡 Why use ComfyUI XMP Tagger?
 
-### System Requirements
-- **Python**: `3.10` or higher
-- **OS**: Windows (optimized with GDI handle safety), macOS, or Linux
+AI image generators like ComfyUI embed detailed generation parameters (prompts, models, samplers) inside PNG files, but standard photo managers cannot read or index this internal data. 
 
-### Main Python Dependencies
-The app relies on the following key libraries (installed automatically via `requirements.txt`):
-- `customtkinter` (Modern UI framework)
-- `Pillow` (Image metadata & file processing)
-- `packaging` (Version checking)
+**ComfyUI XMP Tagger** bridges this gap:
+1. It reads the embedded prompt API execution graph and UI nodes losslessly.
+2. It extracts checkpoints, LoRAs, samplers, and prompts.
+3. It converts them into standard hierarchical XMP keywords (e.g., `Model/juggernaut`, `Lora/detail_enhancer`).
+4. Once processed, you can import your images into photo managers to instantly search, filter, and organize your generated images by their exact generation parameters!
 
-## 🛠️Installation
+---
 
-1. **Clone the Repository**
+## ⚡ Core Features
+
+* **🚀 Ultra-Fast Byte-Level Editing (`embed` mode)**: Direct binary PNG chunk editor. Modifies metadata chunks in just **30ms per image** without decompressing or re-encoding pixels. Completely lossless and preserves existing star ratings.
+* **📂 Sidecar Support (`sidecar` mode)**: Option to generate separate `.xmp` sidecar files in the same folder instead of modifying the PNG files directly.
+* **🔍 Integrated Workflow Analyzer**: Inspect ComfyUI workflows of any sample image inside the app. Easily discover and click shortcut buttons to inject custom prompt field names, node IDs, or widget keys into your config.
+* **🔤 Word-Based Prompt Tagging**: Automatically tokenizes entire prompts into individual tags. Filters out stopwords using custom word lists.
+* **🏷️ Customizable Dictionaries**: Easily edit stopwords (`stopwords.txt`), adjective merges (`adjectives.txt`), and short-word exceptions (`short_words.txt`) directly through direct links in the UI.
+* **🎨 Resolution Megapixel Tiers**: Automatically tags images with resolution categories (e.g., standard, upscale) and couples them with the standardized EXIF `ExposureProgram` field for easy tooltips in DigiKam.
+* **🛡️ Windows GDI Safety**: Features a high-performance single-widget virtual file listbox. Safe from Windows GDI handle exhaustion, ensuring 100% stability even with folders of 10,000+ images.
+* **💾 Presets & Persistence**: Save and load custom tagging rules with quick-save support. The app remembers your window size, position, slider ratio, and last active preset on launch.
+
+---
+
+## 🛠️ Installation & Setup
+
+### Prerequisites
+* **Windows OS** (optimized for Windows GDI handle safety).
+* **Python 3.10** or newer. Make sure to check **"Add Python to PATH"** during installation.
+
+### Quick Start (Launchers)
+1. Download the latest release from the [Release Page](releases/V1.0.0.0).
+2. Extract the files.
+3. Double-click `Start.vbs` to launch the application completely hidden in the background (no console windows flashing).
+   * *Alternatively, you can run `Start.bat` to see the setup console.*
+
+### Manual Installation
+If you prefer to run it via command line:
+1. Clone the repository or navigate to the directory:
    ```bash
-   git clone [https://github.com/your-username/comfyui-png-xmp-tagger.git](https://github.com/your-username/comfyui-png-xmp-tagger.git)
-   cd comfyui-png-xmp-tagger
-   
-
-### Quick Start (Windows)
-
-Windows One-Click Launchers (check/install requirements and start the App):
-
-    Double-click "Start.bat" to launch via terminal.
-
-    Double-click "Start.vbs" to launch silently in the background (no command prompt window).
-
-### Manual (venv is optional):
-
-#### Windows
-  ```bash
-  python -m venv venv
-  venv\Scripts\activate
-  pip install -r requirements.txt
-```
-
-
-#### Linux / macOS
-```bash
-python3 -m venv venv
-source venv/bin/activate
-venv\Scripts ctivate # Windows
-pip install -r requirements.txt
-```
-
-## Launch Comfyui-XMP-Tagger
-
-#### Windows
-python main.py
-
-#### Linux / macOS (ohne gewähltes venv)
-python3 main.py
-
-#### Run the application (after activating venv)
-python main.py
+   cd comfyui-xmp-tagger
+   ```
+2. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Run the application:
+   ```bash
+   python main.py
+   ```
 
 ---
 
-## 🏗️ Architecture Flow
+## 📖 How to Use
 
-```mermaid
-graph TD
-    A[Scan Folder / Select PNG] --> B[comfy_parser: Read PNG Chunks]
-    B --> C[Extract Checkpoints, LoRAs, Samplers, Dimensions]
-    B --> D[Extract Positive Prompt Strings & Tokenize]
-    B --> E[Extract Existing EXIF/XMP Tags]
-    C & D & E --> F[GUI: Render Live Preview & Diff Comparison]
-    F --> G[xmp_builder: Construct XMP/XML Payload]
-    G --> H{Write Mode}
-    H -->|Embed Mode| I[Lossless Byte-Level PNG Chunk Injection]
-    H -->|Sidecar Mode| J[Generate .xmp Sidecar File]
+1. **Select Folder**: Browse to your target ComfyUI PNG directory. Toggle `Recursive` if you want to include subfolders.
+2. **Scan**: Click **Scan Folder** to load the files. Check the listbox to verify warnings or existing XMP tags.
+3. **Configure Rules**: In the **Settings & Tag Rules** tab, customize which parameters to extract (Models, LoRAs, Samplers, Prompts) and set their prefixes.
+4. **Inspect Workflow (Optional)**: If some prompts are not loading, load an image in the **Workflow Analyzer** tab and click `+ ID` or `+ Key` to teach the tagger where your prompt text is stored.
+5. **Apply**: Click **⚡ Apply XMP tags** to begin batch processing.
+
+---
+
+## 📚 Documentation & References
+
+* [**Technical Manual & Architecture Guide**](TECHNICAL_MANUAL.md): Explains the binary PNG chunk editor, ComfyUI graph parsing algorithms, GDI handle limit safety, and project file structure.
+* [**Version Documentation**](VERSION_DOCS.txt): Detailed user guide and feature summary written in German.
+* [**Changelog & Milestones**](CHANGELOG.md): History of version iterations, milestones, and bug fixes.
+
+---
+
+## 📄 License
+
+This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details.

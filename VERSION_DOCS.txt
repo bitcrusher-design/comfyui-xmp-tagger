@@ -1,0 +1,159 @@
+========================================================================
+             VERSION DOCUMENTATION - COMFYUI XMP TAGGER
+========================================================================
+
+This document describes the implemented functions and features of the
+desktop application for converting ComfyUI metadata into DigiKam-compatible
+hierarchical XMP tags.
+
+------------------------------------------------------------------------
+1. CORE FUNCTIONS & METADATEN-PARSING
+------------------------------------------------------------------------
+* Intelligent Metadata Parser (Dublin Core & Adobe XMP):
+  - Losslessly reads ComfyUI API graphs ("prompt") and UI workflows ("workflow")
+    from PNG images.
+  - Detects checkpoints/models (e.g. CheckpointLoaderSimple, Load Checkpoint).
+  - Detects samplers & schedulers (e.g. KSampler, KSamplerAdvanced).
+  - Detects positive prompts (e.g. CLIPTextEncode) and converts them into
+    individual keyword tags. Weights (e.g., (tag:1.2)) as well as brackets
+    and redundant special characters are automatically filtered out.
+  - Lossless Writing: The original ComfyUI workflow inside the image remains
+    100% untouched and intact when embedding XMP metadata.
+
+* Storage Modes & Writing Methods (Settings):
+  - "embed" (High-performance): Pure Python binary chunk editor. Manipulates chunks
+    directly at the byte level. Since no pixel de-/recompression is performed,
+    the writing process is about 100x to 1000x faster (approx. 30 ms per image)
+    and absolutely lossless. Protects star ratings and ComfyUI metadata.
+  - "sidecar": Creates a separate ".xmp" sidecar file in the same folder.
+
+------------------------------------------------------------------------
+2. USER INTERFACE (GUI - TAB 1: PROCESSING & PREVIEW)
+------------------------------------------------------------------------
+* Tab 1: Dashboard & Live Preview:
+  - Folder Browser: Select the image directory.
+  - Recursive Folder Scan: Option to scan all subfolders.
+  - Flexible Splitter (PanedWindow): Drag-resizable separator (sash) between
+    the file list and the preview. The chosen column ratio is automatically
+    saved and restored.
+  - Manual / Selective Mode (High-Performance & GDI-Safe):
+    - Re-implementation of the file list as a **single** `CTkTextbox` widget with virtual checkboxes (`[X]` / `[ ]`).
+    - **100% GDI-Safe on Windows**: Prevents Windows User/GDI handle exhaustion (which occurs when creating thousands of individual widgets), keeping the tool completely crash-proof even with 10,000+ images.
+    - **Lightning-Fast Loading**: Reduces folder load times for hundreds of images to a few milliseconds.
+    - Allows selective checking and unchecking of individual images by clicking on the checkbox.
+    - Keyboard Navigation: Navigating images via arrow keys immediately updates the preview in the background.
+    - Two utility buttons ("☑️ Select All" and "⬜ Clear Selection") above the list.
+    - Status Summary: A subtle info label next to the selection buttons displays the total number of images and the count of already tagged images (e.g., "902 images | 44 with XMP tags").
+    - Dynamic Button Labeling: The process button dynamically adapts to the selection (e.g., "⚡ Apply XMP tags to 3 image(s)").
+    - Clicking a filename loads its detailed preview and highlights the row in blue without toggling the checkbox.
+    - Visual Status Prefixes:
+      - Images with pre-existing XMP tags are marked with a prominent, cyan-colored `[XMP]` prefix.
+      - Perfect column-aligned layout of all filenames and metadata.
+      - The status and counters update dynamically in the UI immediately after processing.
+    - **UI Customizations (New)**:
+      - **New Tab "🎨 Layout & Design"**: All layout and display settings are moved to their own tab to keep the Settings tab clean.
+      - **Details Toggle**: Checkbox in the new tab to decide whether the list view should show only the filename or also include metadata (models & LoRAs).
+      - **Text Size**: Dropdown menus in the new tab to adjust the font size of the file list (from 8pt to 16pt) in real-time.
+      - Both UI settings are automatically saved in presets and configurations.
+  - 1-to-1 Synchronized File List: Correct listbox display without index desynchronization.
+  - Interactive Status Badge (Pill):
+    - Instantly displays the status of the selected image.
+    - Green: "ℹ️ STATUS: NOT YET TAGGED" (Ready).
+    - Red: "⚠️ STATUS: ALREADY TAGGED" (If the image already contains XMP tags).
+    - Hover Tooltip: Displays the count of tags present in the image.
+    - Click Popup: Opens a modal dialog that clearly lists all XMP tags already embedded in the image.
+  - Live XMP Preview: Formatted text box showing the generated tags sorted by category (e.g., - _Model, - _Lora, - _Prompt).
+    - Color Coding (New): Differentiates between new tags (light green) and pre-existing tags in the image (gray).
+    - **Extraction Warnings (New)**: If prompt extraction is enabled:
+      - **Red (No Tags)**: If 0 tags were extracted, indicating an invalid Node ID, a different prompt field, or a missing node.
+      - **Yellow (Few Tags)**: If fewer than 3 tags were extracted, indicating that the prompt might be written as continuous text (with the recommendation to enable word-based tagging).
+    - **Original Prompt (New)**: Displays the fully extracted positive original prompt of the selected image in light gray text at the bottom of the preview. This allows fast visual checks and direct comparison with generated keywords.
+  - Thumbnail Display: Image preview of the selected PNG (right-aligned).
+    - Clickable (New): Clicking the preview opens the image in the system's default image viewer for detailed inspection.
+  - Status Bar & Progress Bar for Batch Processing and **Scanning (New)**:
+    - Displays the exact progress of folder loading (e.g., `Scanning PNG files... (45/902)`) on the bar.
+    - Disables all interaction buttons during scanning to prevent misclicks and signals to the user that the software is busy and not frozen. Re-enables all buttons and sets the progress bar to 100% automatically upon completion.
+  - Stopwatch Feature (New):
+    - Measures the exact runtime of a run (Tagging, Reset, Overwriting).
+    - Displays the formatted duration (e.g., 4.2 sec or 1 min 5 sec) in the completion dialog.
+  - Cancellation Feature (Cancel):
+    - The process button changes into a red "❌ Cancel processing" button during run.
+    - Allows immediate cancellation of batch processing/cleaning at any time.
+  - XMP Tag Reset: Red main button with a safety prompt to remove all XMP tags from images (ratings and stars remain protected).
+    - Red Deletion Preview (New): Lists all existing tags in prominent red text during reset mode to signal what will be deleted.
+  - Overwrite Mode (Clean-Write) (New):
+    - Checkbox "Delete existing tags before writing (Overwrite)".
+    - Discards old tags and writes only newly captured tags in a single, high-performance write pass (Single-Pass).
+    - Displays removed old tags in red and new tags in green within the preview.
+
+------------------------------------------------------------------------
+3. USER INTERFACE (GUI - TAB 2: SETTINGS & RULES)
+------------------------------------------------------------------------
+* Tab 2: Structured Two-Column Layout (Option A):
+  - Storage Mode: Radio buttons to select the storage location ("Embed in PNG" vs. "Create Sidecars") were moved to the left settings column.
+  - Left Column: General settings, prefixes, and size tiers.
+  - Right Column: Filter settings, whitelist, blacklist, and custom keys.
+  - Compact Row Design (Option C): Checkboxes and prefixes (e.g., for models, LoRAs, samplers, prompts) are located next to each other in a single row.
+  - 🛈 Info Help Buttons (Tooltips): Each setting category features a subtle info button that displays a brief explanation on hover.
+
+* Preset Management with Session Persistence & Quick-Save:
+  - Load: Loads the values of the preset selected in the list.
+  - Save (Quick-Save): Overwrites the active preset directly with current UI values without prompting for a name.
+  - Save As New...: Saves the values as a new preset (with name prompt).
+  - Set As Default: Sets current settings as the global default.
+  - Delete: Removes the selected preset.
+  - The application remembers the last loaded preset upon exit and automatically restores it on the next launch.
+
+------------------------------------------------------------------------
+4. ADVANCED FILTERS & INTELLIGENT RULES
+------------------------------------------------------------------------
+* Global Blacklist Filter (Stopwords):
+  - Works fully globally (not just for prompts!).
+  - Filters out unwanted words from prompts, models, LoRAs, samplers, and schedulers.
+  - Uses intelligent substring matching (case-insensitive).
+  - Filters out raw numerical values (seeds) and limits overly long tags.
+
+* Whitelist Mode (Positive List):
+  - If enabled, only tags listed in the positive list (or possessing partial matches) are generated.
+
+* Multi-line Custom Prompt Keys & Node IDs:
+  - Textbox to define field names for positive prompts (e.g., text_positive).
+  - Supports keys of any length with special characters and commas.
+  - Allows entering numerical Node IDs from the workflow (e.g., 253) to read prompts precisely and without drift from specific text nodes.
+  - Automatically excludes negative nodes (e.g., "Negative Prompt", "Neg").
+
+* Word-based Tagging for Prompts (New):
+  - Optional setting to split entire prompts (e.g., continuous text without commas) into individual words.
+  - Automatically filters out stop-words (e.g., with, from, were, have, this) and words <= 3 characters.
+  - **Editable Stopwords List (`stopwords.txt`)**: Stopwords are stored in a separate text file (`config/stopwords.txt`, one word per line) and can be customized by the user.
+  - **Editable Adjectives List (`adjectives.txt`)**: Contains descriptive words (colors, sizes, conditions) that are automatically merged with subsequent nouns into compound tags (e.g., `dirty torn outfit`). Multiple consecutive adjectives are supported.
+  - **Editable Short Words Exception List (`short_words.txt`) (New)**: Contains short words under 4 characters (such as `cat`, `dog`, `red`, `car`, `hat`) that should be kept as regular tags despite the standard 4-character limit. The file is created automatically if needed and can be freely expanded.
+  - **Direct UI Links**: Clickable links below the checkbox open the stopwords, adjectives, and short words files directly in the system's default text editor.
+  - Remaining words are output as clean, individual XMP tags.
+
+* Active LoRA Filter:
+  - Detects inactive, muted, or bypassed nodes in ComfyUI and ignores LoRAs configured inside them.
+  - Filters out LoRAs whose strength is below the minimum threshold (e.g., < 0.01).
+
+* Megapixel Tiers (Resolution Tags):
+  - Automatically generates resolution tags based on image size in MP.
+  - 3 customizable tiers (e.g., Preview, Standard, Upscale).
+  - Customizable resolution prefix.
+  - **Exposure Program Coupling (New)**: Saves the active tier (e.g., `Standard` or `Upscale`) in the standardized EXIF exposure program field (`exif:ExposureProgram`). This displays the resolution tier directly in DigiKam's standard info tooltip under "Mode/Program", completely independent of hierarchical keywords.
+
+* Additional EXIF / XMP Metadata & Custom Fields (New):
+  - Can be optionally enabled via settings checkboxes (creation date in `xmp:CreateDate`, camera model in `tiff:Model`, description/original prompt in `dc:description`).
+  - **New Popup Window for Custom Attributes**: Clicking the `✍️ Custom Metadata...` button in the lower processing bar opens a dialog to configure global metadata:
+    - **Creator** (`dc:creator`)
+    - **Copyright** statement (`dc:rights`)
+    - **Camera Make** (`tiff:Make`)
+    - **Software** (`xmp:CreatorTool`)
+    - **Comment** (`exif:UserComment`)
+  - Only filled-in fields are written to the images upon saving.
+
+* Optimized UI Layout & Window Geometry (New):
+  - More compactly named checkboxes (`🗑️ Delete XMP` and `🧹 Overwrite XMP`) to make room for the new metadata button.
+  - **Window Geometry & State Persistence**: Saves the exact window dimensions (width/height), screen position (X/Y), and maximization state upon closing, restoring them automatically on the next launch.
+  - **Splitter Position Persistence**: Remembers the exact position of the separating bar (splitter) between the file list and the tag preview, restoring it proportionally to the window size at startup.
+
+========================================================================
