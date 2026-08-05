@@ -10,6 +10,7 @@ Perfect for organizing, filtering, and indexing thousands of Stable Diffusion im
 <a href="https://github.com/user-attachments/assets/c68b9753-3630-488c-96bc-16f1437430df">
   <img src="https://github.com/user-attachments/assets/c68b9753-3630-488c-96bc-16f1437430df" alt="ComfyUI-XMP-Tagger_v100_mainview_01" width="500">
 </a>
+
 ---
 
 ## 💡 Why use ComfyUI XMP Tagger?
