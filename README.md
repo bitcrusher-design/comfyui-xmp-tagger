@@ -8,7 +8,7 @@ Perfect for organizing, filtering, and indexing thousands of Stable Diffusion im
 
 ---
 <p align="center">
-  <img src="[DEIN_BILD_PFAD.png](https://github.com/user-attachments/assets/14f1ce6d-5525-4c87-ab91-d6d8843f9cac)" alt="App Preview" width="450">
+  <img src="(https://github.com/user-attachments/assets/14f1ce6d-5525-4c87-ab91-d6d8843f9cac.png)" alt="App Preview" width="450">
   # 📷 ComfyUI XMP Tagger
 </p>
 ---
