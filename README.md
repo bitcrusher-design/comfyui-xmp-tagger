@@ -7,10 +7,11 @@ A high-performance desktop utility designed to automatically extract **ComfyUI w
 Perfect for organizing, filtering, and indexing thousands of Stable Diffusion images inside photo management suites like **DigiKam**, **Adobe Lightroom**, or **Bridge**.
 
 ---
-<p align="center">
-  <img src="(https://github.com/user-attachments/assets/14f1ce6d-5525-4c87-ab91-d6d8843f9cac.png)" alt="App Preview" width="450">
-  # 📷 ComfyUI XMP Tagger
-</p>
+<img width="1196" height="1048" alt="ComfyUI-XMP-Tagger_v100_mainview_01" src="https://github.com/user-attachments/assets/c68b9753-3630-488c-96bc-16f1437430df" />
+
+<a href="[DEIN_BILD_PFAD.png](https://github.com/user-attachments/assets/c68b9753-3630-488c-96bc-16f1437430df)">
+  <img src="[DEIN_BILD_PFAD.png](https://github.com/user-attachments/assets/c68b9753-3630-488c-96bc-16f1437430df)" alt="App Preview" width="400">
+</a>
 ---
 
 ## 💡 Why use ComfyUI XMP Tagger?
